@@ -12,15 +12,20 @@ namespace JustRecipi.Data
         public JustRecipiDbContext(DbContextOptions options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
             //TODO: Put HasMany/HasOne and WithMany/WithOne Relations Here
             modelBuilder.Entity<Recipe>()
-                .HasMany(review => review.Reviews)
-                .WithOne(recipe => recipe.Recipe);
-            modelBuilder.Entity<CookBook>()
-                .HasMany(r => r.Recipes)
-                .WithOne(c => c.CookBook);
+                .HasOne(c => c.CookBook)
+                .WithMany(c=>c.Recipes)
+                .HasForeignKey(r=> r.CookBookId);
+            
+            modelBuilder.Entity<Review>()
+                .HasOne(r=>r.Recipe)
+                .WithMany(r=>r.Reviews)
+                .HasForeignKey(r=>r.RecipeId);
+            base.OnModelCreating(modelBuilder);
         }
         public virtual DbSet<Recipe> Recipes { get; set; }
+        public virtual DbSet<CookBook> CookBooks { get; set; }
+        public virtual DbSet<Review> Reviews { get; set; }
     }
 }

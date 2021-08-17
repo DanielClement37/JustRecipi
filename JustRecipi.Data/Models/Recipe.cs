@@ -9,6 +9,7 @@ namespace JustRecipi.Data.Models
     {
         [Key]
         public Guid Id { get; set; }
+        public string AuthorId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public int PrepTime { get; set; }
@@ -19,11 +20,14 @@ namespace JustRecipi.Data.Models
         public List<string> Ingredients { get; set; }
         [Column(TypeName = "jsonb")]
         public List<string> Instructions { get; set; }
+        public List<Review> Reviews { get; set; }
         
-        public ICollection<Review> Reviews { get; set; }
-        
-        public CookBook CookBook { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        
+        [ForeignKey("AuthorId")]
+        public virtual User User { get; set; }
+        public Guid CookBookId { get; set; }
+        public CookBook CookBook { get; set; }
     }
 }

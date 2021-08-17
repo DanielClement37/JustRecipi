@@ -9,13 +9,15 @@ namespace JustRecipi.Data.Models
         [Key]
         public Guid Id { get; set; }
         public string AuthorId { get; set; }
-        public string RecipeId { get; set; }
+        public Guid RecipeId { get; set; }
         public int NumStars { get; set; }
         public string Body { get; set; }
         
-        [ForeignKey("AuthorID")]
+        [ForeignKey("AuthorId")]
         public virtual User User { get; set; }
         [ForeignKey("RecipeId")]
         public virtual Recipe Recipe { get; set; }
+        
+        
     }
 }

@@ -10,7 +10,7 @@ namespace JustRecipi.Data.Models
         [Key]
         public Guid Id { get; set; }
         public string UserId { get; set; }
-        public ICollection<Recipe> Recipes { get; set; }
+        public List<Recipe> Recipes { get; set; }
         
         [ForeignKey("UserId")]
         public virtual User User { get; set; }

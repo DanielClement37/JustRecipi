@@ -5,3 +5,4 @@ riderModule.iml
 /_ReSharper.Caches/
 /JustRecipi.WebApi/appsettings.Development.json
 /JustRecipi.WebApi/appsettings.json
+/JustRecipi.Data/Migrations/
