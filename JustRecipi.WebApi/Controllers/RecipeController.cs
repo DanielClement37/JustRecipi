@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using JustRecipi.Data.Models;
 using JustRecipi.Data.RequestModels;
 using JustRecipi.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -22,6 +23,7 @@ namespace JustRecipi.WebApi.Controllers
             _recipeService = recipeService;
         }
         
+        [AllowAnonymous]
         [HttpGet("/api/recipe/{id}")]
         public ActionResult GetRecipe(Guid id)
         {
@@ -29,6 +31,7 @@ namespace JustRecipi.WebApi.Controllers
             return Ok(recipe);
         }
 
+        [Authorize]
         [HttpPost("/api/recipes")]
         public ActionResult AddRecipe([FromBody] NewRecipeRequest recipeRequest)
         {
@@ -58,6 +61,8 @@ namespace JustRecipi.WebApi.Controllers
             return Ok($"{recipe.Title}: was added to the DB");
         }
 
+        //TODO: Make Sure only the user who made or admin/mod the recipe can delete it
+        [Authorize]
         [HttpDelete("/api/deleteRecipe/{id}")]
         public ActionResult DeleteRecipe(Guid id)
         {
@@ -65,8 +70,10 @@ namespace JustRecipi.WebApi.Controllers
             return Ok($"Recipe deleted with ID: {id}");
         }
 
+        //TODO: Make Sure only the user who made the recipe can update it
+        [Authorize]
         [HttpPost("/api/editRecipe/{id}")]
-        public ActionResult UpdateRecipe([FromBody] NewRecipeRequest recipeRequest, Guid id)
+        public ActionResult UpdateRecipe([FromBody] NewRecipeRequest recipeRequest, Guid recipeId)
         {
             if (!ModelState.IsValid)
             {
@@ -85,7 +92,7 @@ namespace JustRecipi.WebApi.Controllers
                 NumServings = recipeRequest.NumServings
             };
 
-            _recipeService.UpdateRecipe(recipe, id);
+            _recipeService.UpdateRecipe(recipe, recipeId);
 
             return Ok($"{recipe.Title}: was updated");
         }
