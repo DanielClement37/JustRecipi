@@ -1,0 +1,7 @@
+bin/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+/JustRecipi.WebApi/appsettings.Development.json
+/JustRecipi.WebApi/appsettings.json
