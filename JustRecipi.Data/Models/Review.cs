@@ -12,6 +12,8 @@ namespace JustRecipi.Data.Models
         public Guid RecipeId { get; set; }
         public int NumStars { get; set; }
         public string Body { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
         
         [ForeignKey("AuthorId")]
         public virtual User User { get; set; }

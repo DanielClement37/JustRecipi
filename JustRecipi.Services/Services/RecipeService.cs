@@ -16,7 +16,7 @@ namespace JustRecipi.Services.Services
         {
             _db = db;
         }
-
+        //TODO: make Async
         public void AddRecipe(Recipe recipe)
         {
             _db.Add(recipe);
@@ -39,10 +39,6 @@ namespace JustRecipi.Services.Services
             }
         }
 
-        public List<Recipe> GetAllRecipes()
-        {
-            return _db.Recipes.ToList();
-        }
 
         public Recipe GetRecipe(Guid recipeId)
         {

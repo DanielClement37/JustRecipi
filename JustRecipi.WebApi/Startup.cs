@@ -91,6 +91,9 @@ namespace JustRecipi.WebApi
             });
 
             services.AddScoped<IRecipeService, RecipeService>();
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<ICookBookService, CookBookService>();
+            services.AddScoped<IReviewService, ReviewService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

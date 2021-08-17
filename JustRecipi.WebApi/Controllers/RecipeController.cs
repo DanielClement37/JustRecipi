@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using JustRecipi.Data.Models;
-using JustRecipi.WebApi.RequestModels;
+using JustRecipi.Data.RequestModels;
 using JustRecipi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace JustRecipe.Web.Controllers
+namespace JustRecipi.WebApi.Controllers
 {
     [ApiController]
     public class RecipeController : ControllerBase
@@ -21,14 +21,7 @@ namespace JustRecipe.Web.Controllers
             _logger = logger;
             _recipeService = recipeService;
         }
-
-        [HttpGet("/api/recipes")]
-        public ActionResult GetRecipes()
-        {
-            var recipes = _recipeService.GetAllRecipes(); // add pagination
-            return Ok(recipes);
-        }
-
+        
         [HttpGet("/api/recipe/{id}")]
         public ActionResult GetRecipe(Guid id)
         {

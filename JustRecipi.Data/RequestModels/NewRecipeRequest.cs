@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace JustRecipi.WebApi.RequestModels
+namespace JustRecipi.Data.RequestModels
 {
     public class NewRecipeRequest
     {
