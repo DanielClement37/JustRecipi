@@ -19,6 +19,10 @@ namespace JustRecipi.Data.Models
         public List<string> Ingredients { get; set; }
         [Column(TypeName = "jsonb")]
         public List<string> Instructions { get; set; }
+        
+        public ICollection<Review> Reviews { get; set; }
+        
+        public CookBook CookBook { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }
