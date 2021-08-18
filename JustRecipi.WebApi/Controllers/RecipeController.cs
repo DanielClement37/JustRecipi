@@ -16,11 +16,15 @@ namespace JustRecipi.WebApi.Controllers
     {
         private readonly ILogger<RecipeController> _logger;
         private readonly IRecipeService _recipeService;
+        private readonly IAccountService _accountService;
+        private readonly ICookBookService _cookBookService;
 
-        public RecipeController(ILogger<RecipeController> logger, IRecipeService recipeService)
+        public RecipeController(ILogger<RecipeController> logger, IRecipeService recipeService, IAccountService accountService, ICookBookService cookBookService)
         {
             _logger = logger;
             _recipeService = recipeService;
+            _accountService = accountService;
+            _cookBookService = cookBookService;
         }
         
         [AllowAnonymous]
@@ -33,19 +37,22 @@ namespace JustRecipi.WebApi.Controllers
 
         [Authorize]
         [HttpPost("/api/recipes")]
-        public ActionResult AddRecipe([FromBody] NewRecipeRequest recipeRequest)
+        public async Task<ActionResult> AddRecipe([FromBody] NewRecipeRequest recipeRequest, [FromHeader] string authorization)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest("Model State is not valid");
             }
-
-            var now = DateTime.UtcNow;
+            
+            var userId = await _accountService.UserIdFromJwtAsync(authorization.Substring(7));
+            var cookBookId = _cookBookService.GetUserCookBookId(userId);
 
             var recipe = new Recipe
             {
-                CreatedAt = now,
-                UpdatedAt = now,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                AuthorId = userId,
+                CookBookId = cookBookId,
                 Title = recipeRequest.Title,
                 Description = recipeRequest.Description,
                 PrepTime = recipeRequest.PrepTime,

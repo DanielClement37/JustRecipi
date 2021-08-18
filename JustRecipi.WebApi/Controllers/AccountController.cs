@@ -15,13 +15,15 @@ namespace JustRecipi.WebApi.Controllers
 {
     public class AccountController : Controller
     {
-         private UserManager<User> _userManager;
+        private UserManager<User> _userManager;
         private readonly IAccountService _accountService;
+        private readonly ICookBookService _cookBookService;
         
-        public AccountController(UserManager<User> userManager, IAccountService accountService)
+        public AccountController(UserManager<User> userManager, IAccountService accountService, ICookBookService cookBookService)
         {
             _userManager = userManager;
             _accountService = accountService;
+            _cookBookService = cookBookService;
         }
         
         [AllowAnonymous]
@@ -78,14 +80,24 @@ namespace JustRecipi.WebApi.Controllers
                     return BadRequest(ModelState);
                 }
                 
-                var user = new User()
+                var newUser = new User()
                 {
                     Email = register.Email,
                     UserName = register.Username,
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
                 };
-                await _userManager.CreateAsync(user, register.Password);
+                
+                await _userManager.CreateAsync(newUser, register.Password);
+                
+                var cookbook = new CookBook()
+                {
+                    UserId = _userManager.FindByEmailAsync(newUser.Email).Result.Id,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
+                };
+                _cookBookService.CreateCookBook(cookbook);
+                
                 return Ok($"user {register.Username} created");
             }
 

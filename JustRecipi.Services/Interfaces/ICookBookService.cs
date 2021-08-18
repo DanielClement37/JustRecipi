@@ -9,5 +9,6 @@ namespace JustRecipi.Services.Interfaces
         public void CreateCookBook(CookBook cookBook);
         public void DeleteCookBook(Guid cookBookId);
         public List<Recipe> GetCookBookRecipes(Guid cookBookId);
+        public Guid GetUserCookBookId(string userId);
     }
 }

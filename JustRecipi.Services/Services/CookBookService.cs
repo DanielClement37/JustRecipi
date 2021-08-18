@@ -4,6 +4,7 @@ using System.Linq;
 using JustRecipi.Data;
 using JustRecipi.Data.Models;
 using JustRecipi.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace JustRecipi.Services.Services
 {
@@ -41,6 +42,11 @@ namespace JustRecipi.Services.Services
         public List<Recipe> GetCookBookRecipes(Guid cookBookId)
         {
             return _db.Recipes.Where(r => r.CookBookId == cookBookId).ToList();
+        }
+
+        public Guid GetUserCookBookId(string userId)
+        {
+            return _db.CookBooks.Where(u => u.UserId == userId).FirstOrDefaultAsync().Result.Id;
         }
     }
 }
