@@ -41,7 +41,8 @@ namespace JustRecipi.Services.Services
 
         public List<Recipe> GetCookBookRecipes(Guid cookBookId)
         {
-            return _db.Recipes.Where(r => r.CookBookId == cookBookId).ToList();
+            //TODO: Reimplement this
+            return new List<Recipe>();
         }
 
         public Guid GetUserCookBookId(string userId)

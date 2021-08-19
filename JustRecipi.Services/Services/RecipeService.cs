@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using JustRecipi.Data;
 using JustRecipi.Data.Models;
 using JustRecipi.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace JustRecipi.Services.Services
@@ -16,11 +17,20 @@ namespace JustRecipi.Services.Services
         {
             _db = db;
         }
-        //TODO: make Async
-        public void AddRecipe(Recipe recipe)
+       
+        public async Task AddRecipe(Recipe recipe, string userId)
         {
-            _db.Add(recipe);
-            _db.SaveChanges();
+            await _db.AddAsync(recipe);
+
+            var authorCookBook = await _db.CookBooks.Where(u => u.UserId == userId).FirstOrDefaultAsync();
+            var newCookBookRecipe = new CookBookRecipe()
+            {
+                CookBookId = authorCookBook.Id,
+                RecipeId = recipe.Id
+            };
+            await _db.CookBookRecipes.AddAsync(newCookBookRecipe);
+            
+            await _db.SaveChangesAsync();
         }
 
         public void DeleteRecipe(Guid recipeId)

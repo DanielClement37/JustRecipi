@@ -52,7 +52,6 @@ namespace JustRecipi.WebApi.Controllers
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
                 AuthorId = userId,
-                CookBookId = cookBookId,
                 Title = recipeRequest.Title,
                 Description = recipeRequest.Description,
                 PrepTime = recipeRequest.PrepTime,
@@ -62,8 +61,8 @@ namespace JustRecipi.WebApi.Controllers
                 Instructions = recipeRequest.Instructions,
                 NumServings = recipeRequest.NumServings
             };
-
-            _recipeService.AddRecipe(recipe);
+            
+            await _recipeService.AddRecipe(recipe, userId);
 
             return Ok($"{recipe.Title}: was added to the DB");
         }

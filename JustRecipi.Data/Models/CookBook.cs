@@ -10,7 +10,7 @@ namespace JustRecipi.Data.Models
         [Key]
         public Guid Id { get; set; }
         public string UserId { get; set; }
-        public List<Recipe> Recipes { get; set; }
+        public List<CookBookRecipe> CookBookRecipes { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         

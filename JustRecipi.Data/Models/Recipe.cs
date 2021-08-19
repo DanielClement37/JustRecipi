@@ -21,13 +21,12 @@ namespace JustRecipi.Data.Models
         [Column(TypeName = "jsonb")]
         public List<string> Instructions { get; set; }
         public List<Review> Reviews { get; set; }
-        
+        public List<CookBookRecipe> CookBookRecipes { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         
         [ForeignKey("AuthorId")]
         public virtual User User { get; set; }
-        public Guid CookBookId { get; set; }
-        public CookBook CookBook { get; set; }
+        
     }
 }
