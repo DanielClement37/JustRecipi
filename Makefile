@@ -9,7 +9,7 @@ migrations:
 
 db:
 		cd ./JustRecipi.Data && dotnet ef --startup-project ../JustRecipi.WebApi/ database update && cd ..
-start:
+api:
 		cd ./JustRecipi.WebApi && dotnet build && dotnet run && cd ..
 hello:
 		echo 'hello!'
