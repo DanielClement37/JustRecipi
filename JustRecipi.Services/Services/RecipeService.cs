@@ -36,6 +36,7 @@ namespace JustRecipi.Services.Services
         public void DeleteRecipe(Guid recipeId)
         {
             var recipeToDelete = _db.Recipes.Find(recipeId);
+            
             if (recipeToDelete != null)
             {
                 _db.Remove(recipeToDelete);

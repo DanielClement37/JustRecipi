@@ -23,6 +23,11 @@ namespace JustRecipi.Services.Services
             _db.SaveChanges();
         }
 
+        public void AddRecipeToCookBook(Recipe recipe)
+        {
+            throw new NotImplementedException();
+        }
+
         public void DeleteCookBook(Guid cookBookId)
         {
             var cookBookToDelete = _db.Recipes.Find(cookBookId);
@@ -41,8 +46,13 @@ namespace JustRecipi.Services.Services
 
         public List<Recipe> GetCookBookRecipes(Guid cookBookId)
         {
-            //TODO: Reimplement this
-            return new List<Recipe>();
+            var recipes = from cookbookRecipe in _db.CookBookRecipes
+                where cookbookRecipe.CookBookId == cookBookId
+                join recipe in _db.Recipes
+                    on cookbookRecipe.RecipeId equals recipe.Id
+                select recipe;
+            
+           return recipes.ToList();
         }
 
         public Guid GetUserCookBookId(string userId)

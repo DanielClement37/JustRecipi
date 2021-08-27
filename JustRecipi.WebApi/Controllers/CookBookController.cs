@@ -9,13 +9,11 @@ namespace JustRecipi.WebApi.Controllers
 {
     public class CookBookController : Controller
     {
-        private readonly ILogger<RecipeController> _logger;
         private readonly ICookBookService _cookBookService;
         private readonly IAccountService _accountService;
 
-        public CookBookController(ILogger<RecipeController> logger, ICookBookService cookBookService, IAccountService accountService)
+        public CookBookController( ICookBookService cookBookService, IAccountService accountService)
         {
-            _logger = logger;
             _cookBookService = cookBookService;
             _accountService = accountService;
         }

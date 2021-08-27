@@ -70,13 +70,24 @@ namespace JustRecipi.WebApi.Controllers
         //TODO: Make Sure only the user who made or admin/mod the recipe can delete it
         [Authorize]
         [HttpDelete("/api/deleteRecipe/{id}")]
-        public ActionResult DeleteRecipe(Guid id)
+        public  ActionResult DeleteRecipe(Guid id, [FromHeader] string authorization)
         {
-            _recipeService.DeleteRecipe(id);
-            return Ok($"Recipe deleted with ID: {id}");
+            var userId = _accountService.UserIdFromJwtAsync(authorization.Substring(7)).Result;
+            var recipe = _recipeService.GetRecipe(id);
+
+            if (recipe.AuthorId == userId)
+            {
+                _recipeService.DeleteRecipe(id);
+                return Ok($"Recipe deleted with ID: {id}");
+            }
+            else
+            {
+                return BadRequest("recipe and user ids dont match");
+            }
         }
 
         //TODO: Make Sure only the user who made the recipe can update it
+        //TODO: Test This
         [Authorize]
         [HttpPost("/api/editRecipe/{id}")]
         public ActionResult UpdateRecipe([FromBody] NewRecipeRequest recipeRequest, Guid recipeId)
